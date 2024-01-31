@@ -4,7 +4,7 @@ This is my neovim config for C/C++ development.
 
 ![screencapture.png](screencapture.png)
 
-# insturctions
+# instructions
 
 ## dependencies
 
