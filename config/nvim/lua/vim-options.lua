@@ -13,3 +13,13 @@ set splitbelow splitright
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 vim.wo.number = true
+
+---------------------------------------------------------------------------
+--  tags
+
+vim.cmd([[
+let $kernel_version=system('uname -r | tr -d "\n"')
+let $debug_kernel_tags=system("ls -d /usr/src/debug/*/linux-$kernel_version/tags 2>/dev/null | head -n1 | tr -d '\n'")
+set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags,/lib/modules/$kernel_version/build/tags,$debug_kernel_tags,/usr/include/tags
+]])
+
