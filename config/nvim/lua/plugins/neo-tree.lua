@@ -1,0 +1,16 @@
+-- https://github.com/nvim-neo-tree/neo-tree.nvim
+return {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
+        "s1n7ax/nvim-window-picker",
+    },
+    config = function()
+        vim.keymap.set("n", "<C-n>", ":Neotree filesystem toggle left<cr>")
+        vim.keymap.set("n", "<Leader>nt", ":Neotree filesystem reveal left<cr>")
+        vim.keymap.set("n", "<Leader>gs", ":Neotree git_status reveal left<cr>")
+    end,
+}
