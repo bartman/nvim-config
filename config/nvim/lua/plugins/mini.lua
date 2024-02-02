@@ -4,7 +4,7 @@ return {
     config = function()
         require("mini.ai").setup()             -- select inside brackets
         require("mini.align").setup()          -- gA to align text
-        --require("mini.bracketed").setup()      -- [* ]* to move around blocks
+        require("mini.bracketed").setup()      -- [* ]* to move around blocks
         require("mini.comment").setup()        -- gcc comment line, gcip comment paragraph
         require("mini.cursorword").setup()     -- underline word under cursor
         require("mini.jump").setup()           -- f, F, t, T for multiple lines
@@ -41,6 +41,25 @@ return {
             evaluate = { prefix = "g=" },    -- g== eval line,
             replace = { prefix = "gr" },     -- gr replace with a register
             sort = { prefix = "gs" },        -- gs sort selection
+        })
+
+        local br = require("mini.bracketed")
+        br.setup({
+            buffer     = { suffix = 'b', options = {} },
+            comment    = { suffix = 'c', options = {} },
+            conflict   = { suffix = 'x', options = {} },
+            diagnostic = { suffix = '', options = {} }, -- DISABLED: prefer the one from lsp-config.lua
+            file       = { suffix = 'f', options = {} },
+            indent     = { suffix = 'i', options = {} },
+            jump       = { suffix = 'j', options = {} },
+            location   = { suffix = 'l', options = {} },
+            oldfile    = { suffix = 'o', options = {} },
+            quickfix   = { suffix = 'q', options = {} },
+            treesitter = { suffix = 't', options = {} },
+            undo       = { suffix = 'u', options = {} },
+            window     = { suffix = 'w', options = {} },
+            yank       = { suffix = 'y', options = {} },
+
         })
     end,
 }

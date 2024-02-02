@@ -64,15 +64,18 @@ return {
                 severity_sort = true,
             }
             vim.keymap.set("n", "<Leader>lo", function()
-                vim.diagnostic.open_float(dopt)
-            end) -- open a popup at diagnostic location
+                vim.diagnostic.open_float(dopt) -- open a popup at diagnostic location
+            end)
+            vim.keymap.set("n", "<Leader>ls", function()
+                vim.diagnostic.setloclist() -- open quick list with all diagnostics
+            end)
+
             vim.keymap.set("n", "[d", function()
                 vim.diagnostic.goto_prev({ float = { border = border } }) -- [d prev diagnostic
             end)
             vim.keymap.set("n", "]d", function()
                 vim.diagnostic.goto_next({ float = { border = border } }) -- ]d next diagnostic
             end)
-            vim.keymap.set("n", "<Leader>ls", vim.diagnostic.setloclist) -- open quick list with all diagnostics
 
             -- Use LspAttach autocommand to only map the following keys
             -- after the language server attaches to the current buffer

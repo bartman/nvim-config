@@ -45,5 +45,22 @@ return {
     },
     {
         "tpope/vim-fugitive",
+        config = function()
+            --vim.keymap.set("n", "<Leader>gs", ":Git<cr>")
+            vim.keymap.set("n", "<Leader>gd", ":Gdiffsplit<cr>")
+            vim.keymap.set("n", "<Leader>gc", ":Git commit<cr>")
+            vim.keymap.set("n", "<Leader>gb", ":Git blame<cr>")
+            vim.keymap.set("n", "<Leader>gl", ":Gclog<cr>")
+            vim.keymap.set("n", "<Leader>gg", ":copen<CR>:Ggrep -q -e '<C-R>=getreg('/')<Enter>'<CR>")
+
+            --[[
+            map <LocalLeader>gs :Git<cr>
+            map <LocalLeader>gd :Gdiffsplit<cr>
+            map <LocalLeader>gc :Gcommit<cr>
+            map <LocalLeader>gb :Git blame<cr>
+            map <LocalLeader>gl :Gclog<cr>
+            map <LocalLeader>gg :copen<CR>:Ggrep -e '<C-R>=getreg('/')<Enter>'<CR>
+            --]]
+        end
     },
 }

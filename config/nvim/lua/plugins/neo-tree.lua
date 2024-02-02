@@ -15,6 +15,7 @@ return {
                     hide_by_pattern = {
                         "*~",
                         ".*~",
+                        ".cache/",
                     },
                     always_show = { -- remains visible even if other settings would normally hide it
                         ".gitignore",

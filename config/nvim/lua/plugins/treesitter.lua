@@ -5,7 +5,7 @@ return {
     config = function()
         local configs = require("nvim-treesitter.configs")
         configs.setup({
-            ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "cmake" },
+            ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "cmake", "markdown" },
             auto_install = true,
             sync_install = true,
             highlight = { enable = true },
