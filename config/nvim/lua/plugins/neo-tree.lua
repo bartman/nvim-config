@@ -9,6 +9,19 @@ return {
         "s1n7ax/nvim-window-picker",
     },
     config = function()
+        require("neo-tree").setup({
+            filesystem = {
+                filtered_items = {
+                    hide_by_pattern = {
+                        "*~",
+                        ".*~",
+                    },
+                    always_show = { -- remains visible even if other settings would normally hide it
+                        ".gitignore",
+                    },
+                },
+            },
+        })
         vim.keymap.set("n", "<C-n>", ":Neotree filesystem toggle left<cr>")
         vim.keymap.set("n", "<Leader>nt", ":Neotree filesystem reveal left<cr>")
         vim.keymap.set("n", "<Leader>gs", ":Neotree git_status reveal left<cr>")

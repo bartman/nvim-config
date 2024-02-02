@@ -37,30 +37,22 @@ end
 vim.api.nvim_create_user_command('A', alternate_file, {})
 
 ---------------------------------------------------------------------------
--- When leaving a buffer, save the cursor position
+-- When leaving a buffer, save the cursor position, restore on reentry
 
-vim.cmd([[
-au BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+local api = vim.api
+api.nvim_create_autocmd({ 'BufRead', 'BufReadPost' }, {
+    callback = function()
+        local buffer_name = vim.api.nvim_buf_get_name(0)
+        if #buffer_name == 0 then return end -- skip buffer with no name
 
-" When entering a buffer, restore the cursor position
-function! MyWinSaveView()
-        if &diff
-                let b:winview = winsaveview()
-        endif
-endf
-function! MyWinRestoreView()
-        if &diff
-                if(exists('b:winview'))
-                        call winrestview(b:winview)
-                endif
-        endif
-endf
-au BufLeave * :call MyWinSaveView()
-au BufEnter * :call MyWinRestoreView()
-]])
+        local row, column = unpack(api.nvim_buf_get_mark(0, '"'))
+        local buf_line_count = api.nvim_buf_line_count(0)
+
+        if row >= 1 and row <= buf_line_count then -- only within range
+            api.nvim_win_set_cursor(0, { row, column })
+        end
+    end,
+})
 
 ---------------------------------------------------------------------------
 -- misc bindings

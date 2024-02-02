@@ -20,7 +20,7 @@ return {
                 null_ls.builtins.code_actions.gitsigns,
 
                 -- C/C++
-                null_ls.builtins.diagnostics.clang_check.with({}),
+                --null_ls.builtins.diagnostics.clang_check.with({}),
                 null_ls.builtins.diagnostics.cppcheck.with({}),
                 --null_ls.builtins.diagnostics.cpplint.with({ extra_args = { '—-filter=-legal/copyright' } }), -- doesn't know C++20
                 null_ls.builtins.formatting.clang_format.with({}),
@@ -45,6 +45,5 @@ return {
                 null_ls.builtins.formatting.beautysh.with({}),
             },
         })
-
     end,
 }

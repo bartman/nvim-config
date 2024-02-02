@@ -24,7 +24,7 @@ return {
                 current_line_blame_formatter_nc = "", -- not committed
                 current_line_blame_opts = {
                     virt_text = true,
-                    virt_text_pos = 'right_align', -- 'eol' | 'overlay' | 'right_align'
+                    virt_text_pos = "right_align", -- 'eol' | 'overlay' | 'right_align'
                     delay = 1000,
                     ignore_whitespace = true,
                     virt_text_priority = 1,
@@ -42,5 +42,8 @@ return {
 
             vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#85878a" })
         end,
+    },
+    {
+        "tpope/vim-fugitive",
     },
 }
