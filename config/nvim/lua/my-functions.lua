@@ -45,6 +45,9 @@ api.nvim_create_autocmd({ 'BufRead', 'BufReadPost' }, {
         local buffer_name = vim.api.nvim_buf_get_name(0)
         if #buffer_name == 0 then return end -- skip buffer with no name
 
+        local filetype = vim.api.nvim_get_option_value('filetype',{ scope='local' })
+        if filetype == 'neo-tree' then return end
+
         local row, column = unpack(api.nvim_buf_get_mark(0, '"'))
         local buf_line_count = api.nvim_buf_line_count(0)
 
