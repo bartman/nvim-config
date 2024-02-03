@@ -2,10 +2,12 @@
 return {
     "akinsho/toggleterm.nvim",
     config = function()
-        local tt = require("toggleterm")
-        tt.setup({
+        require("toggleterm").setup({
             insert_mappings = false,
             open_mapping = [[<c-\>]],
+        })
+        require("which-key").register({
+            ["<C-\\>"] = "Toggleterm",
         })
     end,
 }

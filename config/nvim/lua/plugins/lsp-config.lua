@@ -25,6 +25,9 @@ return {
     },
     {
         "neovim/nvim-lspconfig",
+        dependencies = {
+            "folke/which-key.nvim",
+        },
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -70,6 +73,14 @@ return {
                 vim.diagnostic.setloclist() -- open quick list with all diagnostics
             end)
 
+            require("which-key").register({
+                l = {
+                    name = "LSP",
+                    o = "diagnostics float",
+                    s = "diagnostics quicklist",
+                },
+            }, { prefix = "<Leader>" })
+
             vim.keymap.set("n", "[d", function()
                 vim.diagnostic.goto_prev({ float = { border = border } }) -- [d prev diagnostic
             end)
@@ -107,9 +118,48 @@ return {
                     vim.keymap.set({ "n", "v" }, "<Leader>ca", vim.lsp.buf.code_action, kopt)
                     vim.keymap.set("n", "<Leader>cf", vim.lsp.buf.format, kopt)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, kopt)
-                    vim.keymap.set("n", "<Leader>f", function()
+                    vim.keymap.set("n", "<Leader>cF", function()
                         vim.lsp.buf.format({ async = true })
                     end, kopt)
+
+                    local wk = require("which-key")
+                    wk.register({
+                        K = "help hover",
+                        ["<C-k>"] = "help signature",
+                    })
+
+                    wk.register({
+                        g = {
+                            d = "definition",
+                            D = "declaration",
+                            i = "implementation",
+                            r = "references",
+                        },
+                    })
+
+                    wk.register({
+                        D = "type definition",
+                        w = {
+                            a = "add workspace folder",
+                            r = "remove workspace folder",
+                            l = "list workspace folders",
+                        },
+                        r = {
+                            n = "buffer rename",
+                        },
+                        c = {
+                            a = "code action",
+                            f = "code format",
+                            F = "code format (async)",
+                        },
+                        l = {
+                            d = "diff split",
+                            c = "commit",
+                            b = "blame",
+                            l = "log",
+                            g = "grep",
+                        },
+                    }, { prefix = "<Leader>" })
                 end,
             })
         end,

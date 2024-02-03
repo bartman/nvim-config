@@ -8,10 +8,10 @@ return {
         "rcarriga/nvim-dap-ui",
         "jay-babu/mason-nvim-dap.nvim", -- :DapInstall command, maps mason names to DAP adapter names
         "nvim-lua/plenary.nvim",
+        "folke/which-key.nvim",
     },
     config = function()
         local dap, dapui, mnd = require("dap"), require("dapui"), require("mason-nvim-dap")
-        local async = require("plenary.async")
         dapui.setup({})
         mnd.setup({
             ensure_installed = { "stylua", "cppdbg", "codelldb", "bash", "python" },
@@ -328,8 +328,7 @@ return {
             widgets.centered_float(widgets.scopes)
         end)
 
-        local wk = require("which-key")
-        wk.register({
+        require("which-key").register({
             d = {
                 name = "debugging",
                 d = "start debugging",

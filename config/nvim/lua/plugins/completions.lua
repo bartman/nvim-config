@@ -18,6 +18,9 @@ return {
     },
     {
         "hrsh7th/nvim-cmp",
+        dependencies = {
+            "folke/which-key.nvim",
+        },
         config = function()
             local cmp = require("cmp")
             local luasnip = require("luasnip")
@@ -113,6 +116,9 @@ return {
                     { name = "path",        priority = 10 },
                     { name = "buffer",      priority = 10 },
                 }),
+            })
+            require("which-key").register({
+                ["<Tab>"] = "SuperTab",
             })
         end,
     },

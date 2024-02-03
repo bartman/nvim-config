@@ -7,6 +7,7 @@ return {
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
         "s1n7ax/nvim-window-picker",
+        "folke/which-key.nvim",
     },
     config = function()
         require("neo-tree").setup({
@@ -25,6 +26,14 @@ return {
         })
         vim.keymap.set("n", "<C-n>", ":Neotree filesystem toggle left<cr>")
         vim.keymap.set("n", "<Leader>nt", ":Neotree filesystem reveal left<cr>")
-        vim.keymap.set("n", "<Leader>gs", ":Neotree git_status reveal left<cr>")
+        vim.keymap.set("n", "<Leader>ns", ":Neotree git_status reveal left<cr>")
+
+        require("which-key").register({
+            n = {
+                name = "NeoTree",
+                t = "neo tree",
+                s = "git status",
+            },
+        }, { prefix = "<Leader>" })
     end,
 }

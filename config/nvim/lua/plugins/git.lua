@@ -3,6 +3,9 @@
 return {
     {
         "aspeddro/gitui.nvim",
+        dependencies = {
+            "folke/which-key.nvim",
+        },
         config = function()
             local gitui = require("gitui")
             gitui.setup({})
@@ -10,10 +13,20 @@ return {
             vim.keymap.set("n", "<Leader>gu", function()
                 gitui.open()
             end)
+
+            require("which-key").register({
+                g = {
+                    name = "Git",
+                    u = "gitui",
+                },
+            }, { prefix = "<Leader>" })
         end,
     },
     {
         "lewis6991/gitsigns.nvim",
+        dependencies = {
+            "folke/which-key.nvim",
+        },
         config = function()
             local gitsigns = require("gitsigns")
 
@@ -48,24 +61,28 @@ return {
                     end
 
                     -- Navigation
-                    map('n', ']g', function()
+                    map("n", "]g", function()
                         --if vim.wo.diff then return ']c' end
-                        vim.schedule(function() gs.next_hunk() end)
-                        return '<Ignore>'
-                    end, {expr=true})
+                        vim.schedule(function()
+                            gs.next_hunk()
+                        end)
+                        return "<Ignore>"
+                    end, { expr = true })
 
-                    map('n', '[g', function()
+                    map("n", "[g", function()
                         --if vim.wo.diff then return '[c' end
-                        vim.schedule(function() gs.prev_hunk() end)
-                        return '<Ignore>'
-                    end, {expr=true})
+                        vim.schedule(function()
+                            gs.prev_hunk()
+                        end)
+                        return "<Ignore>"
+                    end, { expr = true })
 
                     -- Actions
-                    map('n', '<Leader>ga', gs.stage_hunk)
-                    map('n', '<Leader>gr', gs.reset_hunk)
-                    map('n', '<Leader>gA', gs.stage_buffer)
-                    map('n', '<Leader>gR', gs.reset_buffer)
-                    map('n', '<Leader>gp', gs.preview_hunk)
+                    map("n", "<Leader>ga", gs.stage_hunk)
+                    map("n", "<Leader>gr", gs.reset_hunk)
+                    map("n", "<Leader>gA", gs.stage_buffer)
+                    map("n", "<Leader>gR", gs.reset_buffer)
+                    map("n", "<Leader>gp", gs.preview_hunk)
 
                     --map('v', '<Leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
                     --map('v', '<Leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
@@ -77,11 +94,22 @@ return {
                     --map('n', '<Leader>td', gs.toggle_deleted)
 
                     -- Text object
-                    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-                end
+                    --map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+                end,
             })
 
             vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#85878a" })
+
+            require("which-key").register({
+                g = {
+                    name = "Git",
+                    a = "stage hunk",
+                    r = "reset hunk",
+                    A = "stage buffer",
+                    R = "reset buffer",
+                    p = "preview hunk",
+                },
+            }, { prefix = "<Leader>" })
         end,
     },
     {
@@ -94,14 +122,16 @@ return {
             vim.keymap.set("n", "<Leader>gl", ":Gclog<cr>")
             vim.keymap.set("n", "<Leader>gg", ":copen<CR>:Ggrep -q -e '<C-R>=getreg('/')<Enter>'<CR>")
 
-            --[[
-            map <LocalLeader>gs :Git<cr>
-            map <LocalLeader>gd :Gdiffsplit<cr>
-            map <LocalLeader>gc :Gcommit<cr>
-            map <LocalLeader>gb :Git blame<cr>
-            map <LocalLeader>gl :Gclog<cr>
-            map <LocalLeader>gg :copen<CR>:Ggrep -e '<C-R>=getreg('/')<Enter>'<CR>
-            --]]
-        end
+            require("which-key").register({
+                g = {
+                    name = "Git",
+                    d = "diff split",
+                    c = "commit",
+                    b = "blame",
+                    l = "log",
+                    g = "grep",
+                },
+            }, { prefix = "<Leader>" })
+        end,
     },
 }
