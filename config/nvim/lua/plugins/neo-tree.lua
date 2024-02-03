@@ -21,6 +21,9 @@ return {
                     always_show = { -- remains visible even if other settings would normally hide it
                         ".gitignore",
                     },
+                    never_show = {
+                        ".cache", -- clangd creates this in the cwd
+                    }
                 },
             },
         })
