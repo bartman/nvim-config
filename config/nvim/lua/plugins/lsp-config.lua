@@ -5,7 +5,16 @@ return {
     {
         "williamboman/mason.nvim", -- installs all the LSPs
         config = function()
-            require("mason").setup()
+            require("mason").setup({
+                ui = {
+                    border = 'rounded',
+                    icons = {
+                        package_installed = "✓",
+                        package_pending = "➜",
+                        package_uninstalled = "✗",
+                    },
+                },
+            })
         end,
     },
     {
