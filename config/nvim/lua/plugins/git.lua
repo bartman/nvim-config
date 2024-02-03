@@ -16,7 +16,7 @@ return {
 
             require("which-key").register({
                 g = {
-                    name = "Git",
+                    name = "git",
                     u = "gitui",
                 },
             }, { prefix = "<Leader>" })
@@ -102,7 +102,7 @@ return {
 
             require("which-key").register({
                 g = {
-                    name = "Git",
+                    name = "git",
                     a = "stage hunk",
                     r = "reset hunk",
                     A = "stage buffer",
@@ -115,21 +115,22 @@ return {
     {
         "tpope/vim-fugitive",
         config = function()
-            --vim.keymap.set("n", "<Leader>gs", ":Git<cr>")
+            --[[
             vim.keymap.set("n", "<Leader>gd", ":Gdiffsplit<cr>")
             vim.keymap.set("n", "<Leader>gc", ":Git commit<cr>")
             vim.keymap.set("n", "<Leader>gb", ":Git blame<cr>")
             vim.keymap.set("n", "<Leader>gl", ":Gclog<cr>")
             vim.keymap.set("n", "<Leader>gg", ":copen<CR>:Ggrep -q -e '<C-R>=getreg('/')<Enter>'<CR>")
+            --]]
 
             require("which-key").register({
                 g = {
-                    name = "Git",
-                    d = "diff split",
-                    c = "commit",
-                    b = "blame",
-                    l = "log",
-                    g = "grep",
+                    name = "git",
+                    d = { ":Gdiffsplit<cr>", "diff split" },
+                    c = { ":Git commit<cr>", "commit" },
+                    b = { ":Git blame<cr>", "blame" },
+                    l = { ":Gclog<cr>", "log" },
+                    g = { ":copen<CR>:Ggrep -q -e '<C-R>=getreg('/')<Enter>'<CR>", "grep" },
                 },
             }, { prefix = "<Leader>" })
         end,

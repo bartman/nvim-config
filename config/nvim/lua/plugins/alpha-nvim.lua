@@ -29,11 +29,13 @@ return {
 
         alpha.setup(dashboard.opts)
 
-        vim.keymap.set("n", "<Leader>aa", ":Alpha<CR>")
         require("which-key").register({
-            a = {
-                a = "Alpha",
+            ['<Leader>'] = {
+                a = {
+                    name = 'alpha',
+                    a = { ":Alpha<CR>", "Alpha" },
+                }
             },
-        }, { prefix = "<Leader>" })
+        })
     end,
 }

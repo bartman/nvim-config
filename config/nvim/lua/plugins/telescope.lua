@@ -10,23 +10,30 @@ return {
         },
         config = function()
             local ts = require("telescope.builtin")
+            --[[
             vim.keymap.set("n", "<C-p>", ts.find_files, {})
             vim.keymap.set("n", "<Leader>ff", ts.find_files, {})
             vim.keymap.set("n", "<Leader>fg", ts.live_grep, {})
             vim.keymap.set("n", "<Leader>tt", "<Esc>:Telescope<CR>", {})
+            --]]
 
             require("which-key").register({
-                t = {
-                    t = "telescope",
-                },
-                f = {
-                    name = "find",
-                    f = "find files",
-                    g = "live grep",
-                    b = "find buffers",
-                    h = "find help tags",
-                },
-            }, { prefix = "<Leader>" })
+                ["<C-p>"] = { ts.find_files, "find files" },
+                ["<Leader>"] = {
+                    f = {
+                        name = "telescope",
+                        a = { "<cmd>Telescope<cr>", "Telescope" },
+                        f ={ ts.find_files,"files",     },
+                        g ={ ts.live_grep,"live grep",      },
+                        b ={ ts.buffers,"buffers",   },
+                        h ={ ts.help_tags,"help", },
+                        m ={ ts.man_pages,"man pages", },
+                        v ={ ts.vim_options,"vim options", },
+                        r ={ ts.registers,"registers", },
+                        k ={ ts.keymaps,"keymaps", },
+                    },
+                }
+            })
         end,
     },
     {

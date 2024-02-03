@@ -3,8 +3,8 @@
 return {
     "mfussenegger/nvim-dap",
     dependencies = {
-        "vadimcn/codelldb",             -- lldb
-        "Microsoft/vscode-cpptools",    -- gdb
+        "vadimcn/codelldb", -- lldb
+        "Microsoft/vscode-cpptools", -- gdb
         "rcarriga/nvim-dap-ui",
         "jay-babu/mason-nvim-dap.nvim", -- :DapInstall command, maps mason names to DAP adapter names
         "nvim-lua/plenary.nvim",
@@ -12,6 +12,7 @@ return {
     },
     config = function()
         local dap, dapui, mnd = require("dap"), require("dapui"), require("mason-nvim-dap")
+        local widgets = require("dap.ui.widgets")
         dapui.setup({})
         mnd.setup({
             ensure_installed = { "stylua", "cppdbg", "codelldb", "bash", "python" },
@@ -285,66 +286,40 @@ return {
 
         -- keyboard shortcuts for debuggin
 
-        vim.keymap.set("n", "<Leader>dd", MyDap.start)
-        vim.keymap.set("n", "<Leader>dc", function()
-            dap.continue()
-        end)
-        vim.keymap.set("n", "<Leader>do", function()
-            dap.step_over()
-        end)
-        vim.keymap.set("n", "<Leader>di", function()
-            dap.step_into()
-        end)
-        vim.keymap.set("n", "<Leader>dr", function()
-            dap.step_out()
-        end)
-        vim.keymap.set("n", "<Leader>dt", function()
-            dap.toggle_breakpoint()
-        end)
-        vim.keymap.set("n", "<Leader>db", function()
-            dap.set_breakpoint()
-        end)
-        vim.keymap.set("n", "<Leader>dl", function()
-            dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
-        end)
-        vim.keymap.set("n", "<Leader>dO", function()
-            dap.repl.open()
-        end)
-        vim.keymap.set("n", "<Leader>dL", function()
-            dap.run_last()
-        end)
-        vim.keymap.set({ "n", "v" }, "<Leader>dh", function()
-            require("dap.ui.widgets").hover()
-        end)
-        vim.keymap.set({ "n", "v" }, "<Leader>dp", function()
-            require("dap.ui.widgets").preview()
-        end)
-        vim.keymap.set("n", "<Leader>df", function()
-            local widgets = require("dap.ui.widgets")
-            widgets.centered_float(widgets.frames)
-        end)
-        vim.keymap.set("n", "<Leader>ds", function()
-            local widgets = require("dap.ui.widgets")
-            widgets.centered_float(widgets.scopes)
-        end)
+        --[[
+        vim.keymap.set("n", "<Leader>dd",          MyDap.start)
+        vim.keymap.set("n", "<Leader>dc",          function() dap.continue() end)
+        vim.keymap.set("n", "<Leader>do",          function() dap.step_over() end)
+        vim.keymap.set("n", "<Leader>di",          function() dap.step_into() end)
+        vim.keymap.set("n", "<Leader>dr",          function() dap.step_out() end)
+        vim.keymap.set("n", "<Leader>dt",          function() dap.toggle_breakpoint() end)
+        vim.keymap.set("n", "<Leader>db",          function() dap.set_breakpoint() end)
+        vim.keymap.set("n", "<Leader>dl",          function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end)
+        vim.keymap.set("n", "<Leader>dO",          function() dap.repl.open() end)
+        vim.keymap.set("n", "<Leader>dL",          function() dap.run_last() end)
+        vim.keymap.set({ "n", "v" }, "<Leader>dh", function() require("dap.ui.widgets").hover() end)
+        vim.keymap.set({ "n", "v" }, "<Leader>dp", function() require("dap.ui.widgets").preview() end)
+        vim.keymap.set("n", "<Leader>df", function() widgets.centered_float(widgets.frames) end)
+        vim.keymap.set("n", "<Leader>ds", function() widgets.centered_float(widgets.scopes) end)
+        --]]
 
         require("which-key").register({
             d = {
                 name = "debugging",
-                d = "start debugging",
-                c = "continue",
-                o = "step over",
-                i = "step into",
-                r = "step out",
-                t = "toggle BP",
-                b = "set BP",
-                l = "log BP",
-                O = "open",
-                L = "run last",
-                h = "hover",
-                p = "preview",
-                f = "curr frame",
-                s = "curr scope",
+                d = { MyDap.start, "start debugging" },
+                c = { dap.continue, "continue", },
+                o = { dap.step_over, "step over", },
+                i = { dap.step_into, "step into", },
+                r = { dap.step_out, "step out", },
+                t = { dap.toggle_breakpoint, "toggle BP", },
+                b = { dap.set_breakpoint, "set BP", },
+                l = { function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, "log BP", },
+                O = { dap.repl.open, "open", },
+                L = { dap.run_last, "run last", },
+                h = { function() require("dap.ui.widgets").hover() end, "hover", },
+                p = { function() require("dap.ui.widgets").preview() end, "preview", },
+                f = { function() widgets.centered_float(widgets.frames) end, "curr frame", },
+                s = { function() widgets.centered_float(widgets.scopes) end, "curr scope", },
             },
         }, { prefix = "<Leader>" })
     end,

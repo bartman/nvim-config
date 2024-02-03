@@ -1,6 +1,9 @@
 return {
     "echasnovski/mini.nvim",
     version = "*",
+    dependencies = {
+        "folke/which-key.nvim",
+    },
     config = function()
         require("mini.ai").setup()             -- select inside brackets
         require("mini.align").setup()          -- gA to align text
@@ -35,6 +38,12 @@ return {
         local mm = require("mini.map") -- minimap
         mm.setup()
         vim.keymap.set("n", "<Leader>mm", mm.toggle)
+        require("which-key").register({
+            m = {
+                name = "mini",
+                m = { mm.toggle, "minimap" }
+            },
+        }, { prefix = "<Leader>" })
 
         local op = require("mini.operators") -- execute code
         op.setup({

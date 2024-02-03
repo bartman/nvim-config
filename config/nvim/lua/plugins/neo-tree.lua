@@ -24,16 +24,22 @@ return {
                 },
             },
         })
+        --[[
         vim.keymap.set("n", "<C-n>", ":Neotree filesystem toggle left<cr>")
         vim.keymap.set("n", "<Leader>nt", ":Neotree filesystem reveal left<cr>")
         vim.keymap.set("n", "<Leader>ns", ":Neotree git_status reveal left<cr>")
+        --]]
 
         require("which-key").register({
-            n = {
-                name = "NeoTree",
-                t = "neo tree",
-                s = "git status",
-            },
-        }, { prefix = "<Leader>" })
+            ["<C-n>"] = { ":Neotree filesystem toggle left<cr>", "Neotree"},
+            ["<Leader>"] = {
+                n = {
+                    name = "neo-tree",
+                    t = { ":Neotree filesystem reveal left<cr>", "neo tree" },
+                    s = { ":Neotree git_status reveal left<cr>", "git status" },
+                    b = { ":Neotree buffers reveal left<cr>", "buffers" },
+                },
+            }
+        })
     end,
 }

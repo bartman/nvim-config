@@ -114,7 +114,7 @@ return {
                         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
                     end, kopt)
                     vim.keymap.set("n", "<Leader>D", vim.lsp.buf.type_definition, kopt)
-                    vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, kopt)
+                    vim.keymap.set("n", "<Leader>cr", vim.lsp.buf.rename, kopt)
                     vim.keymap.set({ "n", "v" }, "<Leader>ca", vim.lsp.buf.code_action, kopt)
                     vim.keymap.set("n", "<Leader>cf", vim.lsp.buf.format, kopt)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, kopt)
@@ -140,19 +140,20 @@ return {
                     wk.register({
                         D = "type definition",
                         w = {
+                            name = "workspace",
                             a = "add workspace folder",
                             r = "remove workspace folder",
                             l = "list workspace folders",
                         },
-                        r = {
-                            n = "buffer rename",
-                        },
                         c = {
+                            name = "code",
                             a = "code action",
                             f = "code format",
                             F = "code format (async)",
+                            r = "buffer rename",
                         },
                         l = {
+                            name = "lsp",
                             d = "diff split",
                             c = "commit",
                             b = "blame",
@@ -160,6 +161,36 @@ return {
                             g = "grep",
                         },
                     }, { prefix = "<Leader>" })
+
+                    --[[
+                    -- TODO: this was giving me some errors
+                    require("which-key").register({
+                        K = { function() vim.lsp.buf.hover(kopt) end, "help hover", },
+                        ["<C-k>"] = { function() vim.lsp.buf.signature_help(kopt) end, "help signature", },
+
+                        ["gD"] = { function() vim.lsp.buf.declaration(kopt) end, "definition", },
+                        ["gd"] = { function() vim.lsp.buf.definition(kopt) end, "declaration", },
+                        ["gi"] = { function() vim.lsp.buf.implementation(kopt) end, "implementation", },
+                        ["gr"] = { function() vim.lsp.buf.references(kopt) end, "references", },
+
+                        ["<Leader>"] = {
+                            D = { vim.lsp.buf.type_definition(kopt), "type definition" },
+                            w = {
+                                name = "workspace",
+                                a = { vim.lsp.buf.add_workspace_folder(kopt), "add workspace folder" },
+                                r = { vim.lsp.buf.remove_workspace_folder(kopt), "remove workspace folder" },
+                                l = { function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, "list workspace folders", },
+                            },
+                            c = {
+                                name = "code",
+                                a = { function() vim.lsp.buf.code_action(kopt) end, "code action", },
+                                f = { function() vim.lsp.buf.format(kopt) end, "code format", },
+                                F = { function() vim.lsp.buf.format({ async = true }) end, "code format (async)", },
+                                r = { function() vim.lsp.buf.rename(kopt) end, "symbol rename", },
+                            },
+                        },
+                    })
+                    --]]
                 end,
             })
         end,

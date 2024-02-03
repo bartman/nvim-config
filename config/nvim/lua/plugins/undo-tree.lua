@@ -11,6 +11,7 @@ return {
     },
     require("which-key").register({
         u = {
+            name = "undo",
             t = "undo tree",
         },
     }, { prefix = "<Leader>" }),
