@@ -9,6 +9,7 @@ return {
         "jay-babu/mason-nvim-dap.nvim", -- :DapInstall command, maps mason names to DAP adapter names
         "nvim-lua/plenary.nvim",
         "folke/which-key.nvim",
+        'bartman/history-select.nvim',
     },
     config = function()
         local dap, dapui, mnd = require("dap"), require("dapui"), require("mason-nvim-dap")
@@ -179,34 +180,35 @@ return {
 
         local MyDap = {}
 
+        local MyDapArgs = require('history-select').new({
+            title = 'Select arguments for executable...',
+            history_file = 'dap-args'
+        })
+
         MyDap.get_debug_arguments = function(dapcfg) -- ask user for debug arguments
-            local choices = {
-                "1 2 3",
-                "4 5 6",
-            }
-            vim.ui.select(choices, {
-                prompt = "Select arguments for executable",
-            }, function(selection)
-                --print("argument selection: " .. vim.inspect(selection))
+            MyDapArgs:ask({
+                item_selected = function(_, selection)
+                    print("argument selection: " .. vim.inspect(selection))
 
-                local words = {}
-                if selection then
-                    for word in string.gmatch(selection, "%S+") do
-                        table.insert(words, word)
+                    local words = {}
+                    if selection then
+                        for word in string.gmatch(selection, "%S+") do
+                            table.insert(words, word)
+                        end
                     end
+
+                    --print("argument words: " .. vim.inspect(words))
+                    dapcfg.args = vim.deepcopy(words)
+
+                    --print(vim.inspect(dapcfg))
+
+                    if not dap.status() == "" then
+                        dap.close()
+                    end
+
+                    dap.run(dapcfg, { new = true })
                 end
-
-                --print("argument words: " .. vim.inspect(words))
-                dapcfg.args = vim.deepcopy(words)
-
-                --print(vim.inspect(dapcfg))
-
-                if not dap.status() == "" then
-                    dap.close()
-                end
-
-                dap.run(dapcfg, { new = true })
-            end)
+            })
         end
 
         MyDap.get_debug_exec = function(dapcfg) -- ask user for executable
@@ -320,6 +322,7 @@ return {
                 p = { function() require("dap.ui.widgets").preview() end, "preview", },
                 f = { function() widgets.centered_float(widgets.frames) end, "curr frame", },
                 s = { function() widgets.centered_float(widgets.scopes) end, "curr scope", },
+                q = { dapui.close, "quit debugging" },
             },
         }, { prefix = "<Leader>" })
     end,
