@@ -13,6 +13,8 @@ You'll probably have to install some tools...
 sudo apt install clang clangd npm
 ```
 
+See also `get-lazyvim.sh` for installing [lazygit](https://github.com/jesseduffield/lazygit) (on Debian/Ubuntu).
+
 ## neovim from source
 
 You will need neovim 0.10, or at least 0.9 for some of these plugins.
