@@ -1,6 +1,25 @@
 -- https://github.com/aspeddro/gitui.nvim
+-- https://github.com/kdheepak/lazygit.nvim
 -- https://github.com/lewis6991/gitsigns.nvim
 return {
+    {
+        'kdheepak/lazygit.nvim',
+        dependencies = {
+            "nvim-telescope/telescope.nvim",
+            "nvim-lua/plenary.nvim",
+            "folke/which-key.nvim",
+        },
+        config = function()
+            require("telescope").load_extension("lazygit")
+            require("which-key").register({
+                g = {
+                    name = "git",
+                    z = { "<cmd>LazyGit<cr>", "lazy git ui" },
+                },
+            }, { prefix = "<Leader>" })
+        end,
+    },
+    --[[
     {
         "aspeddro/gitui.nvim",
         dependencies = {
@@ -22,6 +41,7 @@ return {
             }, { prefix = "<Leader>" })
         end,
     },
+    --]]
     {
         "lewis6991/gitsigns.nvim",
         dependencies = {
