@@ -187,23 +187,26 @@ return {
 
         MyDap.get_debug_arguments = function(dapcfg) -- ask user for debug arguments
             MyDapArgs:ask({
+                -- history group is the executable path, or 'DEFAULT'
+                history_group = vim.uv.fs_realpath(dapcfg.program) or 'DEFAULT',
+
+                -- when item is selected, we can start/restart debugging
                 item_selected = function(_, selection)
                     print("argument selection: " .. vim.inspect(selection))
 
+                    -- break up the line into words
+                    -- TODO: should probably do something smart with quotes and escapes here
                     local words = {}
                     if selection then
                         for word in string.gmatch(selection, "%S+") do
                             table.insert(words, word)
                         end
                     end
-
-                    --print("argument words: " .. vim.inspect(words))
                     dapcfg.args = vim.deepcopy(words)
 
-                    --print(vim.inspect(dapcfg))
-
+                    -- kill it if it's started
                     if not dap.status() == "" then
-                        dap.close()
+                        dap.close() -- TODO: should we do dapui.close() instead?
                     end
 
                     dap.run(dapcfg, { new = true })

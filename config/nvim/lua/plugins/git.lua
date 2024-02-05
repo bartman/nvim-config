@@ -121,15 +121,19 @@ return {
             vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#85878a" })
 
             require("which-key").register({
-                g = {
-                    name = "git",
-                    a = "stage hunk",
-                    r = "reset hunk",
-                    A = "stage buffer",
-                    R = "reset buffer",
-                    p = "preview hunk",
+                ["<Leader>"] = {
+                    g = {
+                        name = "git",
+                        a = "stage hunk",
+                        r = "reset hunk",
+                        A = "stage buffer",
+                        R = "reset buffer",
+                        p = "preview hunk",
+                    },
                 },
-            }, { prefix = "<Leader>" })
+                ["[g"] = { "Previous git hunk"},
+                ["]g"] = { "Next git hunk"},
+            })
         end,
     },
     {
