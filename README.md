@@ -55,6 +55,9 @@ Start things up...
 ```
 nvim
 ```
+It will take a while to install all the dependencies the first time.
+Be patient...
+
 ## checking installed plugins
 
 At this point you can run
