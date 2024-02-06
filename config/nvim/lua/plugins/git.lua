@@ -3,7 +3,7 @@
 -- https://github.com/lewis6991/gitsigns.nvim
 return {
     {
-        'kdheepak/lazygit.nvim',
+        "kdheepak/lazygit.nvim",
         dependencies = {
             "nvim-telescope/telescope.nvim",
             "nvim-lua/plenary.nvim",
@@ -52,7 +52,7 @@ return {
 
             gitsigns.setup({
                 auto_attach = true,
-                current_line_blame = true,
+                current_line_blame = false,
                 current_line_blame_formatter = " 👤 <author>, <author_time:%Y-%m-%d> - <summary>",
                 current_line_blame_formatter_nc = "", -- not committed
                 current_line_blame_opts = {
@@ -71,51 +71,49 @@ return {
                     changedelete = { text = "~" },
                     untracked = { text = "┆" },
                 },
-                on_attach = function(bufnr)
-                    local gs = package.loaded.gitsigns
-
-                    local function map(mode, l, r, opts)
-                        opts = opts or {}
-                        opts.buffer = bufnr
-                        vim.keymap.set(mode, l, r, opts)
-                    end
-
-                    -- Navigation
-                    map("n", "]g", function()
-                        --if vim.wo.diff then return ']c' end
-                        vim.schedule(function()
-                            gs.next_hunk()
-                        end)
-                        return "<Ignore>"
-                    end, { expr = true })
-
-                    map("n", "[g", function()
-                        --if vim.wo.diff then return '[c' end
-                        vim.schedule(function()
-                            gs.prev_hunk()
-                        end)
-                        return "<Ignore>"
-                    end, { expr = true })
-
-                    -- Actions
-                    map("n", "<Leader>ga", gs.stage_hunk)
-                    map("n", "<Leader>gr", gs.reset_hunk)
-                    map("n", "<Leader>gA", gs.stage_buffer)
-                    map("n", "<Leader>gR", gs.reset_buffer)
-                    map("n", "<Leader>gp", gs.preview_hunk)
-
-                    --map('v', '<Leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-                    --map('v', '<Leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-                    --map('n', '<Leader>hu', gs.undo_stage_hunk)
-                    --map('n', '<Leader>hb', function() gs.blame_line{full=true} end)
-                    --map('n', '<Leader>tb', gs.toggle_current_line_blame)
-                    --map('n', '<Leader>hd', gs.diffthis)
-                    --map('n', '<Leader>hD', function() gs.diffthis('~') end)
-                    --map('n', '<Leader>td', gs.toggle_deleted)
-
-                    -- Text object
-                    --map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-                end,
+                -- on_attach = function(bufnr)
+                --     local function map(mode, l, r, opts)
+                --         opts = opts or {}
+                --         opts.buffer = bufnr
+                --         vim.keymap.set(mode, l, r, opts)
+                --     end
+                --
+                --     -- Navigation
+                --     map("n", "]g", function()
+                --         --if vim.wo.diff then return ']c' end
+                --         vim.schedule(function()
+                --             gitsigns.next_hunk()
+                --         end)
+                --         return "<Ignore>"
+                --     end, { expr = true })
+                --     
+                --     map("n", "[g", function()
+                --         --if vim.wo.diff then return '[c' end
+                --         vim.schedule(function()
+                --             gitsigns.prev_hunk()
+                --         end)
+                --         return "<Ignore>"
+                --     end, { expr = true })
+                --
+                --     -- Actions
+                --     map("n", "<Leader>ga", gitsigns.stage_hunk)
+                --     map("n", "<Leader>gr", gitsigns.reset_hunk)
+                --     map("n", "<Leader>gA", gitsigns.stage_buffer)
+                --     map("n", "<Leader>gR", gitsigns.reset_buffer)
+                --     map("n", "<Leader>gp", gitsigns.preview_hunk)
+                --
+                --     --map('v', '<Leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+                --     --map('v', '<Leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+                --     --map('n', '<Leader>hu', gs.undo_stage_hunk)
+                --     --map('n', '<Leader>hb', function() gs.blame_line{full=true} end)
+                --     --map('n', '<Leader>tb', gs.toggle_current_line_blame)
+                --     --map('n', '<Leader>hd', gs.diffthis)
+                --     --map('n', '<Leader>hD', function() gs.diffthis('~') end)
+                --     --map('n', '<Leader>td', gs.toggle_deleted)
+                --
+                --     -- Text object
+                --     --map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+                -- end,
             })
 
             vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#85878a" })
@@ -124,15 +122,16 @@ return {
                 ["<Leader>"] = {
                     g = {
                         name = "git",
-                        a = "stage hunk",
-                        r = "reset hunk",
-                        A = "stage buffer",
-                        R = "reset buffer",
-                        p = "preview hunk",
+                        a = { gitsigns.stage_hunk, "stage hunk" },
+                        r = { gitsigns.reset_hunk, "reset hunk" },
+                        A = { gitsigns.stage_buffer, "stage buffer" },
+                        R = { gitsigns.reset_buffer, "reset buffer" },
+                        p = { gitsigns.preview_hunk, "preview hunk" },
+                        t = { gitsigns.toggle_current_line_blame, "toggle blame" },
                     },
                 },
-                ["[g"] = { "Previous git hunk"},
-                ["]g"] = { "Next git hunk"},
+                ["[g"] = { gitsigns.next_hunk, "Previous git hunk" },
+                ["]g"] = { gitsigns.prev_hunk, "Next git hunk" },
             })
         end,
     },

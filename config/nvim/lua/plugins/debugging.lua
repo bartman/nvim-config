@@ -33,7 +33,7 @@ return {
         -- configurations for debugging, see MyDap below
         dap.configurations.cpp = {
             {
-                name = "Launch CPP",
+                name = "Launch CPP (no arguments)",
                 type = "cppdbg",
                 request = "launch",
                 MIMode = "gdb",
@@ -42,11 +42,23 @@ return {
                 cwd = "${workspaceFolder}",
                 program = function()
                     error("no executable selected; use ,dd first")
-                    --return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+                args = nil,
+                exception_breakpoints = { "raised" }, -- or raised or uncaught
+            },
+            {
+                name = "Launch CPP (with arguments)",
+                type = "cppdbg",
+                request = "launch",
+                MIMode = "gdb",
+                miDebuggerPath = "/bin/gdb",
+                miDebuggerArgs = "--nh",
+                cwd = "${workspaceFolder}",
+                program = function()
+                    error("no executable selected; use ,dd first")
                 end,
                 args = function()
                     error("no arguments provided; use ,dd first")
-                    --return vim.fn.input('Arguments for executable: ', vim.fn.getcwd() .. '/', 'file')
                 end,
                 exception_breakpoints = { "raised" }, -- or raised or uncaught
             },
