@@ -20,10 +20,10 @@ local choices = {
                 integrations = {
                     alpha = true,
                     barbecue = {
-                        dim_dirname = true, -- directory name is dimmed by default
+                        dim_dirname = true,
                         bold_basename = true,
-                        dim_context = false,
-                        alt_background = false,
+                        dim_context = true,
+                        alt_background = true,
                     },
                     cmp = true,
                     gitsigns = true,
