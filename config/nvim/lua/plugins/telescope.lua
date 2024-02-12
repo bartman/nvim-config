@@ -17,22 +17,29 @@ return {
             vim.keymap.set("n", "<Leader>tt", "<Esc>:Telescope<CR>", {})
             --]]
 
+            local opts = {
+                prompt_prefix = '🔭', -- 🔭 🔍
+                selection_caret = '▶', -- ⭐🪐 ➡️ ▶
+            }
+
             require("which-key").register({
                 ["<C-p>"] = { ts.find_files, "find files" },
                 ["<Leader>"] = {
                     f = {
                         name = "telescope",
-                        a = { "<cmd>Telescope<cr>", "Telescope" },
-                        f ={ ts.find_files,"files",     },
-                        g ={ ts.live_grep,"live grep",      },
-                        b ={ ts.buffers,"buffers",   },
-                        h ={ ts.help_tags,"help", },
-                        m ={ ts.man_pages,"man pages", },
-                        v ={ ts.vim_options,"vim options", },
-                        r ={ ts.registers,"registers", },
-                        k ={ ts.keymaps,"keymaps", },
+                        a = { function() ts.builtin(opts) end, "all builtins"},
+                        b = { function() ts.buffers(opts) end, "buffers"},
+                        c = { function() ts.commands(opts) end, "commands"},
+                        f = { function() ts.find_files(opts) end, "files"},
+                        g = { function() ts.live_grep(opts) end, "live grep"},
+                        h = { function() ts.help_tags(opts) end, "help"},
+                        k = { function() ts.keymaps(opts) end, "keymaps"},
+                        m = { function() ts.man_pages(opts) end, "man pages"},
+                        r = { function() ts.registers(opts) end, "registers"},
+                        t = { function() ts.tags(opts) end, "tags"},
+                        v = { function() ts.vim_options(opts) end, "vim options"},
                     },
-                }
+                },
             })
         end,
     },

@@ -1,6 +1,11 @@
 -- https://github.com/nvim-lualine/lualine.nvim
+-- https://github.com/meuter/lualine-so-fancy.nvim
 return {
     "nvim-lualine/lualine.nvim",
+    dependencies = {
+        "nvim-tree/nvim-web-devicons",
+        "meuter/lualine-so-fancy.nvim",
+    },
     config = function()
         require("lualine").setup({
             options = {
@@ -23,16 +28,23 @@ return {
                 },
             },
             sections = {
-                lualine_a = { "mode" },
-                lualine_b = { "branch", "diff", "diagnostics" },
-                -- lualine_c = { lualine_filename },
+                lualine_a = {
+                    { "fancy_mode", width = 6 },
+                },
+                lualine_b = {
+                    { "fancy_branch" },
+                    { "fancy_diff" },
+                    { "fancy_diagnostics" },
+                    { "fancy_macro" },
+                },
                 lualine_c = {
                     {
                         "filename",
+                        substitute_home = true,
                         colored = true,
-                        file_status = true,    -- Displays file status (readonly status, modified status)
+                        file_status = true, -- Displays file status (readonly status, modified status)
                         newfile_status = true, -- Display new file status (new file means no write after created)
-                        path = 1,              -- 0: Just the filename
+                        path = 1, -- 0: Just the filename
                         -- 1: Relative path
                         -- 2: Absolute path
                         -- 3: Absolute path, with tilde as the home directory
@@ -48,9 +60,19 @@ return {
                         },
                     },
                 },
-                lualine_x = { "encoding", "fileformat", "filetype" },
-                lualine_y = { "progress" },
-                lualine_z = { "location" },
+                lualine_x = {
+                    { "fancy_searchcount" },
+                    --{ "fancy_lsp_servers" },
+                },
+                lualine_y = {
+                    { "encoding" },
+                    { "fileformat" },
+                    { "fancy_filetype", ts_icon = "" },
+                },
+                lualine_z = {
+                    { "progress" },
+                    { "fancy_location" },
+                },
             },
             inactive_sections = {
                 lualine_a = {},
