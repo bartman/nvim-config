@@ -130,8 +130,8 @@ return {
                         t = { gitsigns.toggle_current_line_blame, "toggle blame" },
                     },
                 },
-                ["[g"] = { gitsigns.next_hunk, "Previous git hunk" },
-                ["]g"] = { gitsigns.prev_hunk, "Next git hunk" },
+                ["[g"] = { gitsigns.prev_hunk, "Previous git hunk" },
+                ["]g"] = { gitsigns.next_hunk, "Next git hunk" },
             })
         end,
     },
