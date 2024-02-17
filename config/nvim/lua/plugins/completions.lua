@@ -83,23 +83,33 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-b>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<Esc>"] = cmp.mapping.close(),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
+                    ["<Esc>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
-                            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-                        elseif luasnip.expand_or_jumpable() then
+                            cmp.close()
+                            local mode = vim.api.nvim_get_mode().mode
+                            if mode:sub(1,1) == 'i' then
+                                vim.api.nvim_command('stopinsert')
+                            end
+                        else
+                            fallback()
+                        end
+                    end),
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        if luasnip.expand_or_jumpable() then
                             luasnip.expand_or_jump()
                         elseif has_words_before() then
                             cmp.complete()
+                        elseif cmp.visible() then
+                            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
                         else
                             fallback()
                         end
                     end, { "i", "s" }),
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-                        elseif luasnip.jumpable(-1) then
+                        if luasnip.jumpable(-1) then
                             luasnip.jump(-1)
+                        elseif cmp.visible() then
+                            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
                         else
                             fallback()
                         end
