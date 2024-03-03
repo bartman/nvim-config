@@ -4,12 +4,22 @@
 -- https://github.com/ollama/ollama
 return {
     -- https://github.com/David-Kunz/gen.nvim
-    "David-Kunz/gen.nvim",
+
+    --"David-Kunz/gen.nvim",
+    "bartman/gen.nvim",
+    branch = 'allow-prompt-function-to-cancel-generate',
+
+    dependencies = {
+        "folke/which-key.nvim",
+    },
     config = function()
         local gen = require'gen'
         gen.setup({
             --model = "mistral",
-            --model = 'llama2:13b',
+            model = 'llama2:13b',
+
+            -- https://ollama.com/library/stable-code
+            --model = 'stable-code',
 
             -- https://ollama.com/library/codellama
             --model = 'codellama:13b-code',
@@ -41,17 +51,39 @@ return {
             debug = false -- Prints errors and the command which is run.
         })
 
-        gen.prompts['Comment_To_Code'] = {
+        gen.prompts['Comment_to_code'] = {
             prompt = "Using $filetype generate code for the following comment block:"
                 .. "$text\n"
             ,
         }
-        gen.prompts['Comment_Replace_With_Code'] = {
-            prompt = "Using $filetype generate code for the following comment block.  Support latest features of the language.  Add good comments to the code.  Only output the result in format ```$filetype\n...\n```:"
+        gen.prompts['Comment_replace_with_code'] = {
+            prompt = "Using $filetype generate code for the following comment block.  Support latest features of the language.  "
+                .. "Add good comments to the code.  Only output the result in format ```$filetype\n...\n```:\n"
                 .. "```$filetype\n$text\n```\n"
             ,
             replace = true,
             extract = "```$filetype\n(.-)```"
         }
+        gen.prompts['Testcases_for_code'] = {
+            prompt = function(opt)
+                if opt.content == "" then
+                    print("content is empty!")
+                    return nil
+                end
+                if opt.filetype == 'cpp' or opt.filetype == 'c' then
+                    return "Using C++20 and googletest generate testcases for the following code:"
+                        .. opt.content .. "\n"
+                else
+                    return "Using $filetype generate testcases for the following code:"
+                        .. opt.content .. "\n"
+                end
+            end
+        }
+
+        -- require("which-key").register({
+        --     mode = { 'v', 'n' },
+        --     ["<Leader>cg"] = { ":Gen<CR>", "Gen", },
+        -- })
+
     end,
 }
