@@ -10,6 +10,7 @@ set modeline modelines=5 nomodelineexpr
 set backup backupext=~
 set scrolloff=5 sidescrolloff=5
 set splitbelow splitright
+set spell
 ]])
 
 vim.g.mapleader = ","

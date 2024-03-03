@@ -42,6 +42,17 @@ local choices = {
             --vim.cmd.colorscheme("catppuccin-frappe")
             --vim.cmd.colorscheme("catppuccin-macchiato")
             vim.cmd.colorscheme("catppuccin-mocha") -- darkest
+
+            -- make search matches a bit more visible
+            vim.cmd([[
+            hi CurSearch  guifg=#181825 guibg=#ff9bb8
+            hi Search     guifg=#ddddca guibg=#936474
+
+            hi SpellBad   guibg=#500000
+            hi SpellCap   guibg=#500070
+            hi SpellRare  guibg=#503000
+            hi SpellLocal guibg=#700000
+            ]])
         end,
     },
     -- https://github.com/folke/tokyonight.nvim
