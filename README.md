@@ -14,7 +14,7 @@ This is my neovim config for C/C++ development.
 
 You'll probably have to install some tools...
 ```
-sudo apt install clang clangd npm
+sudo apt install clang clangd npm unzip fzf ripgrep fd-find
 ```
 
 See also `get-lazyvim.sh` for installing [lazygit](https://github.com/jesseduffield/lazygit) (on Debian/Ubuntu).
