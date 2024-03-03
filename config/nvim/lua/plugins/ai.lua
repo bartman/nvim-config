@@ -9,7 +9,11 @@ return {
         local gen = require'gen'
         gen.setup({
             --model = "mistral",
-            model = 'llama2:13b',
+            --model = 'llama2:13b',
+
+            -- https://ollama.com/library/codellama
+            --model = 'codellama:13b-code',
+            --model = 'codellama:13b-instruct',
 
             -- 💫 https://ollama.com/library/starcoder2
             --model = "starcoder2:15b", -- 600+ languages
@@ -39,12 +43,12 @@ return {
 
         gen.prompts['Comment_To_Code'] = {
             prompt = "Using $filetype generate code for the following comment block:"
-                    .. "$text\n"
+                .. "$text\n"
             ,
         }
         gen.prompts['Comment_Replace_With_Code'] = {
             prompt = "Using $filetype generate code for the following comment block.  Support latest features of the language.  Add good comments to the code.  Only output the result in format ```$filetype\n...\n```:"
-                    .. "```$filetype\n$text\n```\n"
+                .. "```$filetype\n$text\n```\n"
             ,
             replace = true,
             extract = "```$filetype\n(.-)```"
