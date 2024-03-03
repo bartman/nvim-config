@@ -8,7 +8,14 @@ return {
     config = function()
         local gen = require'gen'
         gen.setup({
-            model = "mistral", -- The default model to use.
+            --model = "mistral",
+            model = 'llama2:13b',
+
+            -- 💫 https://ollama.com/library/starcoder2
+            --model = "starcoder2:15b", -- 600+ languages
+            --model = "starcoder2:7b", -- 17 languages
+
+            --
             host = "localhost", -- The host running the Ollama service.
             port = "11434", -- The port on which the Ollama service is listening.
             display_mode = "split", -- The display mode. Can be "float" or "split".
@@ -29,5 +36,18 @@ return {
             -- list_models = '<omitted lua function>', -- Retrieves a list of model names
             debug = false -- Prints errors and the command which is run.
         })
+
+        gen.prompts['Comment_To_Code'] = {
+            prompt = "Using $filetype generate code for the following comment block:"
+                    .. "$text\n"
+            ,
+        }
+        gen.prompts['Comment_Replace_With_Code'] = {
+            prompt = "Using $filetype generate code for the following comment block.  Support latest features of the language.  Add good comments to the code.  Only output the result in format ```$filetype\n...\n```:"
+                    .. "```$filetype\n$text\n```\n"
+            ,
+            replace = true,
+            extract = "```$filetype\n(.-)```"
+        }
     end,
 }
