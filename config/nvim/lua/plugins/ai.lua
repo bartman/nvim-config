@@ -5,9 +5,9 @@
 return {
     -- https://github.com/David-Kunz/gen.nvim
 
-    --"David-Kunz/gen.nvim",
-    "bartman/gen.nvim",
-    branch = 'allow-prompt-function-to-cancel-generate',
+    "David-Kunz/gen.nvim",
+    --"bartman/gen.nvim",
+    --branch = 'allow-prompt-function-to-cancel-generate',
 
     dependencies = {
         "folke/which-key.nvim",
