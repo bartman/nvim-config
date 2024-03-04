@@ -28,7 +28,7 @@ return {
                 -- spelling
                 --null_ls.builtins.completion.spell.with({}),
                 --null_ls.builtins.diagnostics.codespell.with({}), -- yellow warning
-                null_ls.builtins.diagnostics.misspell.with({}), -- blue info
+                --null_ls.builtins.diagnostics.misspell.with({}), -- blue info
 
                 -- python
                 null_ls.builtins.diagnostics.pylint.with({}),
@@ -41,8 +41,8 @@ return {
 
                 -- shell
                 --null_ls.builtins.diagnostics.dotenv_linter.with({}),
-                null_ls.builtins.diagnostics.shellcheck.with({}),
-                null_ls.builtins.formatting.beautysh.with({}),
+                --null_ls.builtins.diagnostics.shellcheck.with({}),
+                --null_ls.builtins.formatting.beautysh.with({}),
             },
         })
     end,
