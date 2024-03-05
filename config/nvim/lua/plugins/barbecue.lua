@@ -1,9 +1,13 @@
 return {
     "utilyre/barbecue.nvim",
     name = "barbecue",
-    --version = "*",
+    version = "*",
     dependencies = {
         "SmiteshP/nvim-navic",
         "nvim-tree/nvim-web-devicons"
     },
+    config = function()
+        local bbq = require'barbecue'
+        bbq.setup({})
+    end,
 }
