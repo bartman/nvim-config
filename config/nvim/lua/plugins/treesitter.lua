@@ -12,5 +12,10 @@ return {
             highlight = { enable = true },
             indent = { enable = true },
         })
+
+        local vim = vim
+        vim.opt.foldmethod = "expr"
+        vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+        vim.opt.foldlevel = 99 -- keep folds open by default (for the first 99 levels)
     end,
 }

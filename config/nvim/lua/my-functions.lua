@@ -58,12 +58,5 @@ api.nvim_create_autocmd({ 'BufRead', 'BufReadPost' }, {
 })
 
 ---------------------------------------------------------------------------
--- misc bindings
+-- misc bindings, see plugins/which-key.lua
 
--- ,so - reload configuration
-vim.cmd("nnoremap <LocalLeader>so :source $MYVIMRC<CR>")
-
--- find merge conflict markers
-vim.cmd([[
-map <LocalLeader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
-]])

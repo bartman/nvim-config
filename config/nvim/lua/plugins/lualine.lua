@@ -5,8 +5,19 @@ return {
     dependencies = {
         "nvim-tree/nvim-web-devicons",
         "meuter/lualine-so-fancy.nvim",
+        "nomnivore/ollama.nvim",
     },
     config = function()
+
+        local function get_ollama_status()
+            local status = require("ollama").status()
+            if status == "IDLE" then
+                return "󱙺"
+            elseif status == "WORKING" then
+                return "󰚩"
+            end
+        end
+
         require("lualine").setup({
             options = {
                 icons_enabled = true,
@@ -36,6 +47,7 @@ return {
                     { "fancy_diff" },
                     { "fancy_diagnostics" },
                     { "fancy_macro" },
+                    get_ollama_status,
                 },
                 lualine_c = {
                     {

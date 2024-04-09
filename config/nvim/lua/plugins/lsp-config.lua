@@ -23,9 +23,9 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     -- lsp
+                    "clangd",
                     "lua_ls",
                     "bashls",
-                    "clangd",
                     --"cmake",
                     "vimls",
                 },

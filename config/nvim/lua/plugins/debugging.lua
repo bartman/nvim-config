@@ -10,6 +10,7 @@ return {
         "nvim-lua/plenary.nvim",
         "folke/which-key.nvim",
         'bartman/history-select.nvim',
+        "nvim-neotest/nvim-nio",
     },
     config = function()
         local dap, dapui, mnd = require("dap"), require("dapui"), require("mason-nvim-dap")

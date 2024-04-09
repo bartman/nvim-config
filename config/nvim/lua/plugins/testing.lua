@@ -5,6 +5,7 @@ return {
         "alfaix/neotest-gtest",
         "folke/which-key.nvim",
         "nvim-treesitter/nvim-treesitter",
+        "Civitasv/cmake-tools.nvim",
     },
     config = function()
         local nt = require("neotest")
@@ -13,8 +14,10 @@ return {
         nt.setup({
             adapters = {
                 require("neotest-gtest").setup({
-                    root = lib.files.match_root_pattern(".git", "build"),
-                    debug_adapter = 'cppdbg',
+                    root = lib.files.match_root_pattern(
+                        "compile_commands.json",
+                        "build",
+                        ".git"),
                 })
             }
         })
