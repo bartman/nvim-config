@@ -31,9 +31,10 @@ return {
 
         require("which-key").register({
             ['<Leader>'] = {
-                a = {
+                A = {
                     name = 'alpha',
                     a = { ":Alpha<CR>", "Alpha" },
+                    A = { ":Alpha<CR>", "Alpha" },
                 }
             },
         })

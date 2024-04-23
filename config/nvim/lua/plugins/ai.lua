@@ -5,6 +5,7 @@
 return {
     {
         "nomnivore/ollama.nvim",
+        enabled = true,
         dependencies = {
             "nvim-lua/plenary.nvim",
             "folke/which-key.nvim",
@@ -43,7 +44,31 @@ return {
         }
     },
     {
+        -- https://github.com/jpmcb/nvim-llama
+        -- uses docker, for some reason, it's also very slow, but it does work, and is local
+        'jpmcb/nvim-llama',
+        enabled = false,
+        dependencies = {
+            "folke/which-key.nvim",
+        },
+        config = function()
+            require'nvim-llama'.setup({
+                debug = false,
+                model = 'llama2:13b',
+            })
+
+            require("which-key").register({
+                mode = { 'v', 'n' },
+                ["<Leader>a"] = {
+                    name = "AI",
+                    l = { "<cmd>Llama<CR>", "Llama" },
+                },
+            })
+        end,
+    },
+    {
         -- https://github.com/David-Kunz/gen.nvim
+        -- nicer plugin, no docker
 
         "David-Kunz/gen.nvim",
         enabled = false,
@@ -126,6 +151,57 @@ return {
             --     ["<Leader>cg"] = { ":Gen<CR>", "Gen", },
             -- })
 
+        end,
+    },
+    {
+        "jackMort/ChatGPT.nvim",
+        enabled = true,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "folke/trouble.nvim",
+            "nvim-telescope/telescope.nvim"
+        },
+        config = function()
+            local cg = require("chatgpt")
+            cg.setup({
+                openai_params = {
+                    model = "gpt-4-turbo"
+                    --model = "gpt-4"
+                    --model = "gpt-3.5-turbo"
+                },
+                actions_paths = {
+                    "~/.config/nvim/chatgpt-actions.json"
+                },
+                popup_input = {
+                    submit = "<C-Enter>",
+                    submit_n = "<Enter>",
+                },
+            })
+
+            require("which-key").register({
+                mode = { 'v', 'n' },
+                ["<Leader>a"] = {
+                    name = "AI",
+                    c = { "<cmd>ChatGPT<CR>", "ChatGPT" },
+                    d = { "<cmd>ChatGPTRun docstring<CR>", "Docstring", mode = { "n", "v" } },
+                    e = { "<cmd>ChatGPTEditWithInstruction<CR>", "Edit with instruction", mode = { "n", "v" } },
+                    f = { "<cmd>ChatGPTRun fix_bugs<CR>", "Fix Bugs", mode = { "n", "v" } },
+                    g = { "<cmd>ChatGPTRun grammar_correction<CR>", "Grammar Correction", mode = { "n", "v" } },
+                    k = { "<cmd>ChatGPTRun keywords<CR>", "Keywords", mode = { "n", "v" } },
+                    o = { "<cmd>ChatGPTRun optimize_code<CR>", "Optimize Code", mode = { "n", "v" } },
+                    r = { "<cmd>ChatGPTRun code_readability_analysis<CR>", "Code Readability Analysis", mode = { "n", "v" } },
+                    R = { "<cmd>ChatGPTRun roxygen_edit<CR>", "Roxygen Edit", mode = { "n", "v" } },
+                    s = { "<cmd>ChatGPTRun summarize<CR>", "Summarize", mode = { "n", "v" } },
+                    t = { "<cmd>ChatGPTRun my_add_tests<CR>", "Add Tests", mode = { "n", "v" } },
+                    T = { "<cmd>ChatGPTRun translate<CR>", "Translate", mode = { "n", "v" } },
+                    x = { "<cmd>ChatGPTRun explain_code<CR>", "Explain Code", mode = { "n", "v" } },
+                },
+                ["<Leader>c"] = {
+                    name = "code",
+                    ["c"] = { "<cmd>ChatGPTRun my_complete_code<CR>", "complete (ChatGPT)" }
+                }
+            })
         end,
     }
 }
