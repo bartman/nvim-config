@@ -18,6 +18,9 @@ require("vim-options")
 -- my functions
 require("my-functions")
 
+-- load in my-autocmds
+require("my-autocmds")
+
 -- this line tells lazy to load ~/.config/nvim/lua/plugins/*.lua
 require("lazy").setup("plugins", {
     change_detection = {
