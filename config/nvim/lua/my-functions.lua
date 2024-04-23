@@ -1,11 +1,4 @@
 ---------------------------------------------------------------------------
--- force ft=help for .txt files in what looks like nvim doc directories
-
-vim.cmd([[
-autocmd BufEnter,BufNewFile,BufRead * if @% =~ '.*local/share/nvim/.*/.*/doc/.*\.txt$' | set ft=help | endif
-]])
-
----------------------------------------------------------------------------
 -- :A
 
 local function alternate_file()
@@ -35,27 +28,6 @@ local function alternate_file()
     end
 end
 vim.api.nvim_create_user_command('A', alternate_file, {})
-
----------------------------------------------------------------------------
--- When leaving a buffer, save the cursor position, restore on reentry
-
-local api = vim.api
-api.nvim_create_autocmd({ 'BufRead', 'BufReadPost' }, {
-    callback = function()
-        local buffer_name = vim.api.nvim_buf_get_name(0)
-        if #buffer_name == 0 then return end -- skip buffer with no name
-
-        local filetype = vim.api.nvim_get_option_value('filetype',{ scope='local' })
-        if filetype == 'neo-tree' then return end
-
-        local row, column = unpack(api.nvim_buf_get_mark(0, '"'))
-        local buf_line_count = api.nvim_buf_line_count(0)
-
-        if row >= 1 and row <= buf_line_count then -- only within range
-            api.nvim_win_set_cursor(0, { row, column })
-        end
-    end,
-})
 
 ---------------------------------------------------------------------------
 -- misc bindings, see plugins/which-key.lua
