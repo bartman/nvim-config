@@ -74,6 +74,42 @@ You can use `:WhichKey` to browse through the keyboard shortcuts interactively.
 
 You can also use the `,fk` shortcut to bring up Telescope keymap browser.
 
+
+# issues
+
+## debugpy
+
+Each time you start, you may see an error `[mason-nvim-dap] installing debugpy`.
+
+After checking the status of this package with `:Mason` you'll find the following error
+```
+  Failed
+    ✗ debugpy
+      ▼ Displaying full log
+        Creating virtual environment…
+        The virtual environment was not created successfully because ensurepip is not
+        available.  On Debian/Ubuntu systems, you need to install the python3-venv
+        package using the following command.
+
+            apt install python3.11-venv
+
+        You may need to use sudo with that command.  After installing the python3-venv
+        package, recreate your virtual environment.
+
+        Failing command: /home/bart/.local/share/nvim/mason/packages/debugpy/venv/bin/python3
+
+        spawn: python3 failed with exit code 1 and signal 0. 
+```
+
+The fix is to...
+
+```sh
+$ apt install python3.11-venv
+```
+
+... and the next time, `debugpy` will install successfully.
+
+
 # shoutouts
 
 based on this video series:
