@@ -33,12 +33,23 @@ return {
         end,
     },
     {
+        -- https://github.com/ray-x/lsp_signature.nvim
+        "ray-x/lsp_signature.nvim",
+        event = "VeryLazy",
+        opts = {},
+        config = function(_, opts)
+            require'lsp_signature'.setup(opts)
+        end
+    },
+    {
         "neovim/nvim-lspconfig",
         dependencies = {
             "folke/which-key.nvim",
         },
         config = function()
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local capabilities = require("cmp_nvim_lsp").default_capabilities(
+                vim.lsp.protocol.make_client_capabilities()
+            )
 
             local lspconfig = require("lspconfig")
 
@@ -59,13 +70,29 @@ return {
             vim.diagnostic.config({ border = border })
             require("lspconfig.ui.windows").default_options.border = "single"
 
-            local sopt = { capabilities = capabilities, handlers = handlers }
+            -- this configures lsp_signature plugin
+            local lsp_signature_setup = {
+                bind = true,
+                handler_opts = { border = "rounded" },
+                hint_enable = true,
+                hint_prefix = "💡 ", -- 🐼 🌀 ⚡ 💡
+                select_signature_key = '<C-.>',
+            }
 
-            lspconfig.lua_ls.setup(sopt)
-            lspconfig.bashls.setup(sopt)
-            lspconfig.clangd.setup(sopt)
-            --lspconfig.cmake.setup(sopt)
-            lspconfig.vimls.setup(sopt)
+            local lsp_opt = {
+                capabilities = capabilities,
+                handlers = handlers,
+                on_attach = function(_, bufnr)
+                    -- this will show function signatures above the function being typed in
+                    require'lsp_signature'.on_attach(lsp_signature_setup, bufnr)
+                end,
+            }
+
+            lspconfig.lua_ls.setup(lsp_opt)
+            lspconfig.bashls.setup(lsp_opt)
+            lspconfig.clangd.setup(lsp_opt)
+            --lspconfig.cmake.setup(lsp_opt)
+            lspconfig.vimls.setup(lsp_opt)
 
             -- from https://github.com/neovim/nvim-lspconfig?tab=readme-ov-file#suggested-configuration
             -- Global mappings.
