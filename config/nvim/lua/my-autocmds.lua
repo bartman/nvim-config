@@ -48,3 +48,13 @@ api.nvim_create_autocmd("FileType", {
     pattern = "qf",
     command = "wincmd J",
 })
+
+---------------------------------------------------------------------------
+-- when opening a terminal, disable spell checking
+
+api.nvim_create_autocmd("TermOpen", {
+    pattern = "*",
+    callback = function()
+        vim.opt_local.spell = false
+    end,
+})
