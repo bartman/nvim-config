@@ -5,6 +5,9 @@ return {
         local null_ls = require("null-ls")
 
         null_ls.setup({
+            on_init = function(client, _)
+                client.offset_encoding = 'utf-16' -- this needs to match lsp-config
+            end,
             sources = {
                 -- lua
                 null_ls.builtins.formatting.stylua.with({

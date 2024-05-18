@@ -50,6 +50,7 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities(
                 vim.lsp.protocol.make_client_capabilities()
             )
+            capabilities.offsetEncoding = { "utf-16" } -- this needs to match none-ls
 
             local lspconfig = require("lspconfig")
 
