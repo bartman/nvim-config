@@ -40,7 +40,8 @@ return {
 
         ---@type Ollama.Config
         opts = {
-            -- your configuration overrides
+            -- model = "llama2:13b",
+            model = "llama3:instruct",
         }
     },
     {
@@ -82,7 +83,8 @@ return {
             local gen = require'gen'
             gen.setup({
                 --model = "mistral",
-                model = 'llama2:13b',
+                --model = 'llama2:13b',
+                model = 'llama3:instruct',
 
                 -- https://ollama.com/library/stable-code
                 --model = 'stable-code',
@@ -100,7 +102,7 @@ return {
                 port = "11434", -- The port on which the Ollama service is listening.
                 display_mode = "split", -- The display mode. Can be "float" or "split".
                 show_prompt = false, -- Shows the Prompt submitted to Ollama.
-                show_model = false, -- Displays which model you are using at the beginning of your chat session.
+                show_model = true, -- Displays which model you are using at the beginning of your chat session.
                 no_auto_close = false, -- Never closes the window automatically.
                 init = function(options)
                     pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
@@ -166,7 +168,8 @@ return {
             local cg = require("chatgpt")
             cg.setup({
                 openai_params = {
-                    model = "gpt-4-turbo"
+                    model = "gpt-4o"
+                    --model = "gpt-4-turbo"
                     --model = "gpt-4"
                     --model = "gpt-3.5-turbo"
                 },
