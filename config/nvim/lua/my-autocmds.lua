@@ -1,11 +1,11 @@
-local api = vim.api
+local vim = vim
 
 ---------------------------------------------------------------------------
 -- force ft=help for .txt files in what looks like nvim doc directories
 
 -- autocmd BufEnter,BufNewFile,BufRead * if @% =~ '.*local/share/nvim/.*/.*/doc/.*\.txt$' | set ft=help | endif
 
-api.nvim_create_autocmd({ "BufEnter", "BufNewFile", "BufRead" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile", "BufRead" }, {
     pattern = "*",
     callback = function()
         -- Check if the current file's path matches the specific pattern
@@ -18,23 +18,23 @@ api.nvim_create_autocmd({ "BufEnter", "BufNewFile", "BufRead" }, {
 ---------------------------------------------------------------------------
 -- When leaving a buffer, save the cursor position, restore on reentry
 
-api.nvim_create_autocmd({ "BufRead", "BufReadPost" }, {
+vim.api.nvim_create_autocmd({ "BufRead", "BufReadPost" }, {
     callback = function()
-        local buffer_name = api.nvim_buf_get_name(0)
+        local buffer_name = vim.api.nvim_buf_get_name(0)
         if #buffer_name == 0 then
             return
         end -- skip buffer with no name
 
-        local filetype = api.nvim_get_option_value("filetype", { scope = "local" })
+        local filetype = vim.api.nvim_get_option_value("filetype", { scope = "local" })
         if filetype == "neo-tree" then
             return
         end
 
-        local row, column = unpack(api.nvim_buf_get_mark(0, '"'))
-        local buf_line_count = api.nvim_buf_line_count(0)
+        local row, column = unpack(vim.api.nvim_buf_get_mark(0, '"'))
+        local buf_line_count = vim.api.nvim_buf_line_count(0)
 
         if row >= 1 and row <= buf_line_count then -- only within range
-            api.nvim_win_set_cursor(0, { row, column })
+            vim.api.nvim_win_set_cursor(0, { row, column })
         end
     end,
 })
@@ -44,7 +44,7 @@ api.nvim_create_autocmd({ "BufRead", "BufReadPost" }, {
 
 -- autocmd filetype qf wincmd J
 
-api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd("FileType", {
     pattern = "qf",
     command = "wincmd J",
 })
@@ -52,9 +52,22 @@ api.nvim_create_autocmd("FileType", {
 ---------------------------------------------------------------------------
 -- when opening a terminal, disable spell checking
 
-api.nvim_create_autocmd("TermOpen", {
+vim.api.nvim_create_autocmd("TermOpen", {
     pattern = "*",
     callback = function()
         vim.opt_local.spell = false
     end,
 })
+
+---------------------------------------------------------------------------
+-- when in diff mode, disable spell checking
+
+vim.api.nvim_create_autocmd({"BufWinEnter", "WinNew", "BufReadPost", "WinEnter"}, {
+    pattern = "*",
+    callback = function()
+        if vim.wo.diff and vim.wo.spell then
+            vim.wo.spell = false
+        end
+    end,
+})
+

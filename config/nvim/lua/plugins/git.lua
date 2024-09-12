@@ -160,7 +160,7 @@ return {
                     c = { ":Git commit<cr>", "commit" },
                     b = { ":Git blame<cr>", "blame" },
                     l = { ":Gclog<cr>", "log" },
-                    g = { ":copen<CR>:Ggrep -q -e '<C-R>=getreg('/')<Enter>'<CR>", "grep" },
+                    g = { ":copen<CR>:Ggrep -q -e '<C-R>=getreg('/')<Enter>' -- '<C-R>=getcwd()<Enter>'<CR>", "grep" },
                 },
             }, { prefix = "<Leader>" })
         end,

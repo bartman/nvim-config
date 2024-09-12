@@ -1,0 +1,28 @@
+{
+  "my_complete_code": {
+    "type": "chat",
+    "opts": {
+      "template": "Complete the following code written in {{lang}} by repeating the existing code and continuing it.\n\nExisting code:\n```{{filetype}}\n{{input}}\n```\n\n```{{filetype}}\n",
+      "strategy": "replace",
+      "params": {
+        "model": "gpt-3.5-turbo",
+        "stop": [
+          "```"
+        ]
+      }
+    }
+  },
+  "my_add_tests": {
+    "type": "chat",
+    "opts": {
+      "template": "Implement tests for the following {{lang}} code, use googletest if appropriate for the language.\n\nCode:\n```{{filetype}}\n{{input}}\n```\n\nTests:\n```{{filetype}}",
+      "strategy": "append",
+      "params": {
+        "model": "gpt-3.5-turbo",
+        "stop": [
+          "```"
+        ]
+      }
+    }
+  }
+}
