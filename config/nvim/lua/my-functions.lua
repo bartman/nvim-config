@@ -1,6 +1,8 @@
 local vim = vim
 ---------------------------------------------------------------------------
--- :A
+-- :A - switches between .h and .c files
+-- this is a lua port of :A from https://www.vim.org/scripts/script.php?script_id=31
+-- (at least a part of the plugin that I used)
 
 local function switch_to_alternate_file()
     local current_path = vim.api.nvim_buf_get_name(0)
@@ -30,7 +32,7 @@ local function switch_to_alternate_file()
     -- this is the file name without leading directory
     local alternate_file = vim.fn.fnamemodify(alternate_path, ":t")
 
-    -- Iterate over all open buffers
+    -- iterate over all open buffers
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         -- Check if buffer is valid and has a name
         local buffer_path = vim.api.nvim_buf_get_name(buf)
@@ -62,7 +64,4 @@ local function switch_to_alternate_file()
     print("Alternate file does not exist: " .. alternate_file)
 end
 vim.api.nvim_create_user_command('A', switch_to_alternate_file, {})
-
----------------------------------------------------------------------------
--- misc bindings, see plugins/which-key.lua
 
