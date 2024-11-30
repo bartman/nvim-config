@@ -1,5 +1,6 @@
 return {
     'bartman/history-select.nvim',
+    enabled = false,
     dependencies = {
         "folke/which-key.nvim",
     },

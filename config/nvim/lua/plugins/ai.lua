@@ -68,6 +68,65 @@ return {
         end,
     },
     {
+        "olimorris/codecompanion.nvim",
+        enabled = true,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            -- The following are optional:
+            { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown", "codecompanion" } },
+            "folke/which-key.nvim",
+        },
+        config = function()
+            require('codecompanion').setup({
+                strategies = {
+                    chat = { adapter = "openai" },
+                    inline = { adapter = "openai" },
+                },
+                adapters = {
+                    openai = function()
+                        return require("codecompanion.adapters").extend("openai", {
+                            schema = {
+                                model = {
+                                    default = "gpt-4o"
+                                }
+                            }
+                        })
+                    end,
+                    xai = function()
+                        return require("codecompanion.adapters").extend("xai", {
+                            schema = {
+                                model = {
+                                    default = "grok-beta"
+                                }
+                            }
+                        })
+                    end,
+                    ollama = function()
+                        return require("codecompanion.adapters").extend("ollama", {
+                            schema = {
+                                model = {
+                                    default = "llama3:latest"
+                                }
+                            }
+                        })
+                    end,
+                }
+            })
+            require("which-key").register({
+                mode = { 'v', 'n' },
+                ["<Leader>C"] = {
+                    name = "CodeCompanion",
+                    a = { "<cmd>CodeCompanionActions<CR>", "Actions" },
+                    A = { "<cmd>CodeCompanionActions<CR>", hidden = true },
+                    c = { "<cmd>CodeCompanionChat Toggle<CR>", "Chat toggle" },
+                    C = { "<cmd>CodeCompanionChat Toggle<CR>", hidden = true },
+                    ["+"] = { "<cmd>CodeCompanionChat Add<CR>", "Chat add" },
+                },
+            })
+        end,
+    },
+    {
         -- https://github.com/David-Kunz/gen.nvim
         -- nicer plugin, no docker
 

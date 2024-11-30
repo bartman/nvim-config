@@ -9,7 +9,7 @@ return {
         "jay-babu/mason-nvim-dap.nvim", -- :DapInstall command, maps mason names to DAP adapter names
         "nvim-lua/plenary.nvim",
         "folke/which-key.nvim",
-        'bartman/history-select.nvim',
+        --'bartman/history-select.nvim',
         "nvim-neotest/nvim-nio",
     },
     config = function()
@@ -193,10 +193,12 @@ return {
 
         local MyDap = {}
 
+        --[[
         local MyDapArgs = require('history-select').new({
             title = 'Select arguments for executable...',
             history_file = 'dap-args'
         })
+        --]]
 
         MyDap.get_debug_arguments = function(dapcfg) -- ask user for debug arguments
             MyDapArgs:ask({
