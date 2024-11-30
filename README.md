@@ -21,7 +21,7 @@ See also `get-lazyvim.sh` for installing [lazygit](https://github.com/jesseduffi
 
 ## neovim from source
 
-You will need neovim 0.10, or at least 0.9 for some of these plugins.
+You will need neovim 0.11, or at least 0.10 for some of these plugins.
 I found building it from source pretty easy on Debian/Ubuntu.
 
 ```
