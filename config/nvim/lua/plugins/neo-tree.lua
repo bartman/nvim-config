@@ -1,6 +1,7 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 return {
     "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
     branch = "v3.x",
     dependencies = {
         "nvim-lua/plenary.nvim",
@@ -35,14 +36,10 @@ return {
 
         require("which-key").register({
             ["<C-n>"] = { ":Neotree filesystem toggle left<cr>", "Neotree"},
-            ["<Leader>"] = {
-                n = {
-                    name = "neo-tree",
-                    t = { ":Neotree filesystem reveal left<cr>", "neo tree" },
-                    s = { ":Neotree git_status reveal left<cr>", "git status" },
-                    b = { ":Neotree buffers reveal left<cr>", "buffers" },
-                },
-            }
+            ["<Leader>n"] = { name = "neo-tree", },
+            ["<Leader>nt"] = { ":Neotree filesystem reveal left<cr>", "neo tree" },
+            ["<Leader>ns"] = { ":Neotree git_status reveal left<cr>", "git status" },
+            ["<Leader>nb"] = { ":Neotree buffers reveal left<cr>", "buffers" },
         })
     end,
 }

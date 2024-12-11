@@ -111,6 +111,11 @@ return {
                             }
                         })
                     end,
+                },
+                diff_provider = {
+                    name = "vimdiff",
+                    command = "difft",
+                    args = {}
                 }
             })
             require("which-key").register({
@@ -124,6 +129,7 @@ return {
                     ["+"] = { "<cmd>CodeCompanionChat Add<CR>", "Chat add" },
                 },
             })
+            vim.cmd([[cab cc CodeCompanion]])
         end,
     },
     {

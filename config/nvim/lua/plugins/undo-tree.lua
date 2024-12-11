@@ -10,9 +10,7 @@ return {
         { "<Leader>ut", "<cmd>lua require('undotree').toggle()<cr>" },
     },
     require("which-key").register({
-        u = {
-            name = "undo",
-            t = "undo tree",
-        },
-    }, { prefix = "<Leader>" }),
+        ["<Leader>u"] = { group = "undo" },
+        ["<Leader>ut"] = { desc = "undo tree" },
+    }),
 }
